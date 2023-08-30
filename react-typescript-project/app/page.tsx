@@ -6,13 +6,16 @@ import Head from "next/head";
 import { RandomFox } from "../components/RandomFox";
 
 const randomNumber = () => Math.floor(Math.random() * 123) + 1;
+const generateId = () => Math.random().toString(36).substr(2,9);
+
+type ImageItem = {id: string, url: string};
 
 const Home: NextPage = () => {
-  const [images, setImages] = useState<Array<string>>([
-    `https://randomfox.ca/images/${randomNumber()}.jpg`,
-    `https://randomfox.ca/images/${randomNumber()}.jpg`,
-    `https://randomfox.ca/images/${randomNumber()}.jpg`,
-    `https://randomfox.ca/images/${randomNumber()}.jpg`
+  const [images, setImages] = useState<Array<ImageItem>>([
+    { id:generateId(), url:`https://randomfox.ca/images/${randomNumber()}.jpg` }, 
+    { id:generateId(), url:`https://randomfox.ca/images/${randomNumber()}.jpg` }, 
+    { id:generateId(), url:`https://randomfox.ca/images/${randomNumber()}.jpg` }, 
+    { id:generateId(), url:`https://randomfox.ca/images/${randomNumber()}.jpg` }, 
   ]);
 
   return (
@@ -27,9 +30,9 @@ const Home: NextPage = () => {
       <h1 className="text-3xl font-bold underline">
       Welcome to my React project
       </h1>
-      {images.map((image, index) => (
-          <div className="p-4" key={index}>
-            <RandomFox image={image} />
+      {images.map(({id, url}) => (
+          <div className="p-4" key={id}>
+            <RandomFox image={url} />
           </div>
         ))}
       </main>
