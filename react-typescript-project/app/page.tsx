@@ -14,13 +14,8 @@ const generateId = (): string => {
   );
 };
 
-type ImageItem = {
-  id: string, 
-  url: string
-};
-
 const Home: NextPage = () => {
-  const [images, setImages] = useState<Array<ImageItem>>([]);
+  const [images, setImages] = useState<Array<IFoxItem>>([]);
 
   const addNewFox : MouseEventHandler<HTMLButtonElement> = () => {
    
@@ -46,15 +41,21 @@ const Home: NextPage = () => {
       Welcome to my React project
       </h1>
       <button onClick={addNewFox}>Add New Fox</button>
-      {images.map(({id, url}) => (
+      {images.map(({id, url}, index) => (
           <div className="p-4" key={id}>
             <LazyImage 
               src={url}
               width={320} 
               height= "auto" 
               title="Random Fox"
-              className = "rounded bg-gray-300" 
-              onClick={()=>console.log("hey")} 
+              className="mx-auto rounded-md bg-gray-300"
+              onClick={() => {
+                console.log("holi!");
+              }}
+              onLazyLoad={(img) => {
+                console.log(`Image #${index + 1} cargada. Nodo:`, img);
+              }}
+
             />
           </div>
         ))}
